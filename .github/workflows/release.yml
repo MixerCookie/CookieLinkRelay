@@ -1,0 +1,130 @@
+name: Build and Release CookieLinkRelay
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag, for example v1.7.2
+        required: true
+        default: v1.7.2
+      prerelease:
+        description: Mark the GitHub Release as prerelease
+        required: true
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+permissions:
+  contents: write
+
+jobs:
+  macos:
+    name: macOS x64 installer
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --target CookieLinkRelay --config Release --parallel 2
+
+      - name: Package installer
+        run: ./packaging/macos_package.sh "${{ inputs.tag }}" build dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CookieLinkRelay-macos-x64-installer
+          path: dist/CookieLinkRelay-${{ inputs.tag }}-macos-x64.pkg
+
+  linux:
+    name: Linux x64 installer
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake ninja-build dpkg-dev
+
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --target CookieLinkRelay --config Release --parallel 2
+
+      - name: Package installer
+        run: ./packaging/linux_deb.sh "${{ inputs.tag }}" build dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CookieLinkRelay-linux-x64-installer
+          path: dist/CookieLinkRelay-${{ inputs.tag }}-linux-x64.deb
+
+  windows:
+    name: Windows x64 installer
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Install packaging tools
+        shell: pwsh
+        run: choco install nsis -y --no-progress
+
+      - name: Configure
+        shell: pwsh
+        run: cmake -S . -B build
+
+      - name: Build
+        shell: pwsh
+        run: cmake --build build --target CookieLinkRelay --config Release --parallel 2
+
+      - name: Package installer
+        shell: pwsh
+        run: |
+          $version = "${{ inputs.tag }}"
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          $buildDir = (Resolve-Path "build").Path
+          $outFile = Join-Path (Resolve-Path "dist").Path "CookieLinkRelay-$version-windows-x64-installer.exe"
+          makensis /DVERSION="$version" /DBUILD_DIR="$buildDir" /DOUTFILE="$outFile" packaging/windows_cookie_link_relay.nsi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CookieLinkRelay-windows-x64-installer
+          path: dist/CookieLinkRelay-${{ inputs.tag }}-windows-x64-installer.exe
+
+  release:
+    name: Publish GitHub Release
+    runs-on: ubuntu-latest
+    needs:
+      - macos
+      - linux
+      - windows
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: release-artifacts
+          merge-multiple: true
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.tag }}
+          name: CookieLinkRelay ${{ inputs.tag }}
+          target_commitish: ${{ github.sha }}
+          prerelease: ${{ inputs.prerelease == 'true' }}
+          files: release-artifacts/*
+          body: |
+            CookieLinkRelay binary release.
+
+            Installer assets:
+            - macOS x64 .pkg: installs CookieLinkRelay to /usr/local/bin.
+            - Linux x64 .deb: installs cookielink-relay to /usr/bin.
+            - Windows x64 installer .exe: installs CookieLinkRelay under Program Files.

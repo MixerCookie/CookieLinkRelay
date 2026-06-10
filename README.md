@@ -34,6 +34,31 @@ cmake --build build --target CookieLinkRelay -j2
 build/CookieLinkRelay_artefacts/Debug/CookieLinkRelay
 ```
 
+## 发布二进制
+
+GitHub Actions 已提供手动发布流程：
+
+1. 打开仓库的 **Actions** 页面。
+2. 选择 **Build and Release CookieLinkRelay**。
+3. 点击 **Run workflow**，输入 tag，例如 `v1.7.2`。
+
+流程会构建并发布：
+
+- `CookieLinkRelay-<tag>-macos-x64.pkg`
+  - 安装 `CookieLinkRelay` 到 `/usr/local/bin`
+- `CookieLinkRelay-<tag>-linux-x64.deb`
+  - 安装 `cookielink-relay` 到 `/usr/bin`
+- `CookieLinkRelay-<tag>-windows-x64-installer.exe`
+  - 安装 `CookieLinkRelay.exe` 到 `Program Files`
+
+本地也可以用同一套脚本生成 macOS 安装包：
+
+```sh
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --target CookieLinkRelay --config Release -j2
+./packaging/macos_package.sh v1.7.2 build dist
+```
+
 ## 运行示例
 
 ```sh
