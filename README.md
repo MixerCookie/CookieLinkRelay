@@ -40,7 +40,7 @@ GitHub Actions 已提供手动发布流程：
 
 1. 打开仓库的 **Actions** 页面。
 2. 选择 **Build and Release CookieLinkRelay**。
-3. 点击 **Run workflow**，输入 tag，例如 `v1.7.2`。
+3. 点击 **Run workflow**，输入 tag，例如 `v1.0.0`。
 
 流程会构建并发布：
 
@@ -56,7 +56,7 @@ GitHub Actions 已提供手动发布流程：
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --target CookieLinkRelay --config Release -j2
-./packaging/macos_package.sh v1.7.2 build dist
+./packaging/macos_package.sh v1.0.0 build dist
 ```
 
 ## 运行示例

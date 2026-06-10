@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(CookieLinkRelay VERSION 1.7.2 LANGUAGES C CXX)
+project(CookieLinkRelay VERSION 1.0.0 LANGUAGES C CXX)
 
 if (WIN32)
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")

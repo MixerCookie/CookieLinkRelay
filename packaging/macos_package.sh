@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-version="${1:-${GITHUB_REF_NAME:-v1.7.2}}"
+version="${1:-${GITHUB_REF_NAME:-v1.0.0}}"
 build_dir="${2:-build}"
 dist_dir="${3:-dist}"
 artifact_root="${COOKIELINK_RELAY_ARTIFACT_ROOT:-${build_dir}/CookieLinkRelay_artefacts/Release}"
