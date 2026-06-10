@@ -12,7 +12,7 @@ trap 'rm -rf "${work_dir}"' EXIT
 
 pkg_root="${work_dir}/pkgroot"
 component_pkg="${work_dir}/CookieLinkRelay-component.pkg"
-output_pkg="${dist_dir}/CookieLinkRelay-${version}-macos-x64.pkg"
+output_pkg="${dist_dir}/CookieLinkRelay-${version}-macos-universal.pkg"
 
 if [[ ! -e "${artifact_root}/CookieLinkRelay" ]]; then
     echo "Missing relay binary: ${artifact_root}/CookieLinkRelay" >&2

@@ -21,8 +21,8 @@ permissions:
 
 jobs:
   macos:
-    name: macOS x64 installer
-    runs-on: macos-13
+    name: macOS universal
+    runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
 
@@ -37,8 +37,8 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: CookieLinkRelay-macos-x64-installer
-          path: dist/CookieLinkRelay-${{ inputs.tag }}-macos-x64.pkg
+          name: CookieLinkRelay-macos-universal
+          path: dist/CookieLinkRelay-${{ inputs.tag }}-macos-universal.pkg
 
   linux:
     name: Linux x64 installer
