@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="title desc">
+  <title id="title">CookieLink relay stability stack</title>
+  <desc id="desc">Relay congestion metrics feed processor and UI, auto latency, resend control, and output limiter.</desc>
+  <rect width="1200" height="500" rx="28" fill="#fbfaf7"/>
+  <text x="64" y="74" fill="#111827" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700">Relay stability stack</text>
+  <text x="64" y="108" fill="#5b6472" font-family="Inter, Arial, sans-serif" font-size="18">Keep audio fresh, expose congestion, and protect the final output.</text>
+
+  <g font-family="Inter, Arial, sans-serif">
+    <rect x="64" y="164" width="225" height="190" rx="18" fill="#ffffff" stroke="#d5ddd8"/>
+    <text x="91" y="207" fill="#0f766e" font-size="22" font-weight="700">1. Time budget</text>
+    <text x="91" y="242" fill="#4b5563" font-size="16">Queue limit is measured</text>
+    <text x="91" y="266" fill="#4b5563" font-size="16">in milliseconds, not only</text>
+    <text x="91" y="290" fill="#4b5563" font-size="16">raw bytes.</text>
+    <rect x="91" y="314" width="150" height="28" rx="14" fill="#dff6ef"/>
+    <text x="111" y="334" fill="#0f766e" font-size="14" font-weight="700">80-150ms target</text>
+
+    <rect x="350" y="164" width="225" height="190" rx="18" fill="#ffffff" stroke="#d5ddd8"/>
+    <text x="377" y="207" fill="#b45309" font-size="22" font-weight="700">2. Drop old audio</text>
+    <text x="377" y="242" fill="#4b5563" font-size="16">When congested, remove</text>
+    <text x="377" y="266" fill="#4b5563" font-size="16">stale audio frames and</text>
+    <text x="377" y="290" fill="#4b5563" font-size="16">keep control frames.</text>
+    <rect x="377" y="314" width="152" height="28" rx="14" fill="#fff0d8"/>
+    <text x="397" y="334" fill="#92400e" font-size="14" font-weight="700">fresh audio first</text>
+
+    <rect x="636" y="164" width="225" height="190" rx="18" fill="#ffffff" stroke="#d5ddd8"/>
+    <text x="663" y="207" fill="#365c9a" font-size="22" font-weight="700">3. Visible stats</text>
+    <text x="663" y="242" fill="#4b5563" font-size="16">Queue waterline, drops,</text>
+    <text x="663" y="266" fill="#4b5563" font-size="16">and write blocking feed</text>
+    <text x="663" y="290" fill="#4b5563" font-size="16">processor and UI.</text>
+    <rect x="663" y="314" width="158" height="28" rx="14" fill="#e8f0ff"/>
+    <text x="684" y="334" fill="#315b86" font-size="14" font-weight="700">auto latency input</text>
+
+    <rect x="922" y="164" width="225" height="190" rx="18" fill="#ffffff" stroke="#d5ddd8"/>
+    <text x="949" y="207" fill="#7c3aed" font-size="22" font-weight="700">4. Output guard</text>
+    <text x="949" y="242" fill="#4b5563" font-size="16">Congestion-aware resend,</text>
+    <text x="949" y="266" fill="#4b5563" font-size="16">soft limiter, and clip</text>
+    <text x="949" y="290" fill="#4b5563" font-size="16">indicator at the end.</text>
+    <rect x="949" y="314" width="138" height="28" rx="14" fill="#f0e8ff"/>
+    <text x="970" y="334" fill="#6d28d9" font-size="14" font-weight="700">last safety net</text>
+  </g>
+
+  <g stroke="#aab5bd" stroke-width="3" stroke-linecap="round" fill="none">
+    <path d="M296 260 H338"/>
+    <path d="M582 260 H624"/>
+    <path d="M868 260 H910"/>
+  </g>
+  <g fill="#aab5bd">
+    <polygon points="338,260 326,253 326,267"/>
+    <polygon points="624,260 612,253 612,267"/>
+    <polygon points="910,260 898,253 898,267"/>
+  </g>
+
+  <rect x="254" y="408" width="692" height="46" rx="23" fill="#111827"/>
+  <text x="294" y="437" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700">The goal is not perfect delivery of stale packets. The goal is fresh, stable, playable audio.</text>
+</svg>

@@ -1,0 +1,34 @@
+.DS_Store
+.idea/
+.vscode/
+*.user
+*.suo
+*.swp
+
+# CMake/build outputs
+build/
+build-*/
+cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+Testing/
+
+# IDE generated files
+*.xcodeproj/
+*.xcworkspace/
+*.xcuserdata/
+DerivedData/
+
+# Packaged/runtime artifacts
+dist/
+*.log
+*.app/
+*.component/
+*.vst3/
+*.lv2/
+*.aaxplugin/
+CookieLink_artefacts/
+CookieLinkRelay_artefacts/
+juce_binarydata_*/
